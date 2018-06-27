@@ -1,0 +1,42 @@
+#!/bin/bash
+# This script is designed to make linux system backups easier by providing a callable 'backup'
+# function along with recording time information
+
+# rsync backup function
+function backup(OPTIONS,DATA,HOST)
+{
+	echo `date` >> "$time_stamps"
+	sudo rsync "$OPTIONS" "$DATA" "$HOST"
+}
+
+### variables
+OPTIONS=--archive  --xattrs --partial --append --append-verify --progress --delete \
+# archive preserves permissions, owners, groups, and sysm symlinks
+# x attrs preserves extended attributes
+# partial, append, and append-verify keeps and resumes partially trasnferred files
+# delete deletes files that do not exist on the client machine
+# progress shows transfer progress
+--exclude={,/dev/*,/proc/*,/sys/*,/tmp/*,/run/*,/mnt/*,/media/*,/lost+found,}
+# exclude these temporary, virtual, and device directories
+
+DATA="/"
+# root directory
+
+# Sample Hosts;
+#HOST=/mnt/backup_drive/backup # locally mounted drive
+#HOST=-e ssh Archie@192.168.0.101:/home/backup_drive/ #remote backup over ssh
+
+# call main function
+backup("$OPTIONS", "/", "$HOST")
+
+# note on client if back up was successful or not
+if test $? = 0; then
+        printf '  ^complete^ `date`' >> /"$time_stamps"
+elif test $? != 0; then
+        printf ' ^incomplete^ $? `date`' >> /"$time_stamps"
+fi
+
+<<'EOF'
+Future Directions:
+- add arguments using case?
+EOF
