@@ -22,7 +22,7 @@ OPTIONS=--archive  --xattrs --partial --append --append-verify --progress --dele
 DATA="/"
 # root directory
 
-# Sample Hosts;
+# Sample Hosts and timestamps;
 #HOST=/mnt/backup_drive/backup # locally mounted drive
 #HOST=-e ssh Archie@192.168.0.101:/home/backup_drive/ #remote backup over ssh
 TIME_STAMPS=/var/log/backup_timestamps
