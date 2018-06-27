@@ -39,6 +39,9 @@ elif test $? != 0; then
 fi
 
 <<'EOF'
+Example cron script:
+0 7 * * * ./backsv2
+
 Future Directions:
 - add arguments using case?
 EOF
