@@ -5,7 +5,7 @@
 # rsync backup function
 function backup(OPTIONS,DATA,HOST)
 {
-	echo `date` >> "$time_stamps"
+	echo `date` >> "$TIME_STAMPS"
 	sudo rsync "$OPTIONS" "$DATA" "$HOST"
 }
 
@@ -25,11 +25,13 @@ DATA="/"
 # Sample Hosts;
 #HOST=/mnt/backup_drive/backup # locally mounted drive
 #HOST=-e ssh Archie@192.168.0.101:/home/backup_drive/ #remote backup over ssh
+TIME_STAMPS=/var/log/backup_timestamps
 
-# call main function
+
+### call main function
 backup("$OPTIONS", "/", "$HOST")
 
-# note on client if back up was successful or not
+### note on client if back up was successful or not
 if test $? = 0; then
         printf '  ^complete^ `date`' >> /"$time_stamps"
 elif test $? != 0; then
